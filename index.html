@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>curse</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Poppins, sans-serif;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .rounded-profile-pic {
+            border-radius: 50%;
+            width: 250px;
+            height: 250px;
+            margin: 20px auto;
+            border: 5px solid #333;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .glow-effect {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            50% { box-shadow: 0 0 10px rgba(255, 255, 255, 1); }
+            100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+        }
+
+        h1 {
+            margin: 10px 0;
+            font-size: 3em;
+            color: white;
+            text-shadow:
+                0 0 5px rgba(255, 255, 255, 0.2),
+                0 0 10px rgba(255, 255, 255, 0.3),
+                0 0 15px rgba(255, 255, 255, 0.4),
+                0 0 20px rgba(255, 255, 255, 0.5),
+                0 0 25px rgba(255, 255, 255, 0.6),
+                0 0 30px rgba(255, 255, 255, 0.7);
+        }
+
+        p a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            text-shadow:
+                0 0 5px rgba(255, 255, 255, 0.2),
+                0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+        .black-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="black-screen" id="blackScreen">
+        <p>[click to enter]</p>
+    </div>
+
+    <div class="center" id="mainContent" style="display: none;">
+        <img src="assets/4fa309a295b8d64ca076b82cdcb9b95c.jpg" class="rounded-profile-pic glow-effect" alt="curse picture">
+        <h1>curse</h1>
+        <p><a href="https://www.instagram.com/x010392/" target="_blank">Instagram</a></p>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="assets/song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const blackScreen = document.getElementById('blackScreen');
+        const mainContent = document.getElementById('mainContent');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+
+        blackScreen.addEventListener('click', () => {
+            blackScreen.style.display = 'none';
+            mainContent.style.display = 'flex';
+            backgroundMusic.volume = 0;
+            backgroundMusic.play();
+
+            let fadeIn = setInterval(() => {
+                if(backgroundMusic.volume < 1) {
+                    backgroundMusic.volume += 0.1;
+                } else {
+                    clearInterval(fadeIn);
+                }
+            }, 200);
+        });
+    </script>
+</body>
+</html>
