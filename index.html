@@ -157,29 +157,44 @@
         });
     </script>
 
-    <!-- Grayscale Sparkle Cursor -->
+    <!-- Smooth Grayscale Sparkle Cursor -->
     <script>
-        (function() {
-            const sparkleChars = ['✦', '✧', '✯', '✬', '✫', '*'];
-            const colors = ['#000000', '#555555', '#AAAAAA', '#FFFFFF']; // grayscale
-            let mouseX = 0;
-            let mouseY = 0;
+    (function() {
+        const sparkleChars = ['✦', '✧', '✯', '✬', '✫', '*'];
+        const colors = ['#000000', '#555555', '#AAAAAA', '#FFFFFF']; // grayscale
+        let sparkles = [];
+        let maxSparkles = 25;
 
-            document.addEventListener('mousemove', e => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
+        document.addEventListener('mousemove', e => {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
+            sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
+            sparkle.style.opacity = 1;
+            document.body.appendChild(sparkle);
 
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = mouseX + 'px';
-                sparkle.style.top = mouseY + 'px';
-                sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
-                sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
-                document.body.appendChild(sparkle);
+            sparkles.push(sparkle);
+            if (sparkles.length > maxSparkles) {
+                const old = sparkles.shift();
+                old.remove();
+            }
+        });
 
-                setTimeout(() => sparkle.remove(), 600); // faster fade
+        function animateSparkles() {
+            sparkles.forEach((s, i) => {
+                s.style.opacity = (parseFloat(s.style.opacity) - 0.05).toFixed(2);
+                if (s.style.opacity <= 0) {
+                    s.remove();
+                    sparkles.splice(i, 1);
+                }
             });
-        })();
+            requestAnimationFrame(animateSparkles);
+        }
+
+        animateSparkles();
+    })();
     </script>
 </body>
 </html>
