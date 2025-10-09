@@ -97,6 +97,15 @@
             cursor: pointer;
             z-index: 1000;
         }
+
+        /* Sparkle styles */
+        .sparkle {
+            position: fixed;
+            font-size: 14px;
+            pointer-events: none;
+            user-select: none;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body>
@@ -146,6 +155,77 @@
                 }
             }, 200);
         });
+    </script>
+
+    <!-- Sparkle Cursor Script -->
+    <script>
+        (function() {
+            const sparkleChars = ['✦', '✧', '✯', '✬', '✫', '*'];
+            const colors = ['#000000', '#555555', '#AAAAAA', '#FFFFFF']; // grayscale
+            let mouseX = 0;
+            let mouseY = 0;
+            let isMoving = false;
+            let movementTimeout = null;
+            let sparkleInterval = null;
+
+            function createSparkle() {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+                
+                sparkle.style.left = (mouseX + offsetX) + 'px';
+                sparkle.style.top = (mouseY + offsetY) + 'px';
+                sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
+                
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 800);
+            }
+
+            function updateMousePosition(e) {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                if (!isMoving) {
+                    isMoving = true;
+                    sparkleInterval = setInterval(createSparkle, 50);
+                }
+                
+                if (movementTimeout) clearTimeout(movementTimeout);
+                
+                movementTimeout = setTimeout(() => {
+                    isMoving = false;
+                    if (sparkleInterval) {
+                        clearInterval(sparkleInterval);
+                        sparkleInterval = null;
+                    }
+                }, 100);
+            }
+
+            function stopSparkles() {
+                isMoving = false;
+                if (sparkleInterval) {
+                    clearInterval(sparkleInterval);
+                    sparkleInterval = null;
+                }
+                if (movementTimeout) {
+                    clearTimeout(movementTimeout);
+                    movementTimeout = null;
+                }
+            }
+
+            document.addEventListener('mousemove', updateMousePosition);
+            document.addEventListener('mouseleave', stopSparkles);
+
+            window.addEventListener('beforeunload', () => {
+                document.removeEventListener('mousemove', updateMousePosition);
+                document.removeEventListener('mouseleave', stopSparkles);
+                stopSparkles();
+            });
+        })();
     </script>
 </body>
 </html>
