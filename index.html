@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>curse</title>
+    <title>curse & lurkin</title>
     <style>
         html, body {
             margin: 0;
@@ -20,6 +20,18 @@
         }
 
         .center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profiles {
+            display: flex;
+            flex-direction: row;
+            gap: 100px;
+        }
+
+        .profile {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -85,7 +97,6 @@
             cursor: pointer;
             z-index: 1000;
         }
-
     </style>
 </head>
 <body>
@@ -94,9 +105,21 @@
     </div>
 
     <div class="center" id="mainContent" style="display: none;">
-        <img src="assets/4fa309a295b8d64ca076b82cdcb9b95c.jpg" class="rounded-profile-pic glow-effect" alt="curse picture">
-        <h1>curse</h1>
-        <p><a href="https://www.instagram.com/x010392/" target="_blank">Instagram</a></p>
+        <div class="profiles">
+            <!-- curse -->
+            <div class="profile">
+                <img src="assets/4fa309a295b8d64ca076b82cdcb9b95c.jpg" class="rounded-profile-pic glow-effect" alt="curse picture">
+                <h1>curse</h1>
+                <p><a href="https://www.instagram.com/x010392/" target="_blank">Instagram</a></p>
+            </div>
+
+            <!-- lurkin -->
+            <div class="profile">
+                <img src="assets/lurkin.jpg" class="rounded-profile-pic glow-effect" alt="lurkin picture">
+                <h1>lurkin</h1>
+                <p><a href="https://www.instagram.com/xx716781/" target="_blank">Instagram</a></p>
+            </div>
+        </div>
     </div>
 
     <audio id="backgroundMusic" loop>
@@ -116,7 +139,7 @@
             backgroundMusic.play();
 
             let fadeIn = setInterval(() => {
-                if(backgroundMusic.volume < 1) {
+                if (backgroundMusic.volume < 1) {
                     backgroundMusic.volume += 0.1;
                 } else {
                     clearInterval(fadeIn);
