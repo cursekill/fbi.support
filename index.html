@@ -98,7 +98,6 @@
             z-index: 1000;
         }
 
-        /* Sparkle styles */
         .sparkle {
             position: fixed;
             pointer-events: none;
@@ -114,14 +113,11 @@
 
     <div class="center" id="mainContent" style="display: none;">
         <div class="profiles">
-            <!-- curse -->
             <div class="profile">
                 <img src="assets/4fa309a295b8d64ca076b82cdcb9b95c.jpg" class="rounded-profile-pic glow-effect" alt="curse picture">
                 <h1>curse</h1>
                 <p><a href="https://www.instagram.com/x010392/" target="_blank">Instagram</a></p>
             </div>
-
-            <!-- lurkin -->
             <div class="profile">
                 <img src="assets/lurkin.jpg" class="rounded-profile-pic glow-effect" alt="lurkin picture">
                 <h1>lurkin</h1>
@@ -145,7 +141,6 @@
             mainContent.style.display = 'flex';
             backgroundMusic.volume = 0;
             backgroundMusic.play();
-
             let fadeIn = setInterval(() => {
                 if (backgroundMusic.volume < 1) {
                     backgroundMusic.volume += 0.1;
@@ -156,64 +151,67 @@
         });
     </script>
 
-    <!-- Smooth Grayscale Sparkle Cursor -->
+    <!-- Updated Sparkle Cursor -->
     <script>
-    (function() {
-        const sparkleChars = ['✦', '✧', '✯', '✬', '✫', '*'];
-        const colors = ['#000000', '#555555', '#AAAAAA', '#FFFFFF']; // grayscale
-        let sparkles = [];
-        const maxSparkles = 40;
-        const fadeSpeed = 0.01; // slower fade
-        let lastX = 0;
-        let lastY = 0;
+        (function() {
+            const sparkleChars = ['✦', '✧', '✯', '✬', '✫', '*'];
+            const colors = ['#000000', '#555555', '#AAAAAA', '#FFFFFF']; // grayscale
+            let sparkles = [];
+            const maxSparkles = 40;
+            const fadeSpeed = 0.01;
+            let lastX = 0;
+            let lastY = 0;
 
-        document.addEventListener('mousemove', e => {
-            const dx = e.clientX - lastX;
-            const dy = e.clientY - lastY;
-            const distance = Math.sqrt(dx*dx + dy*dy);
+            document.addEventListener('mousemove', e => {
+                const dx = e.clientX - lastX;
+                const dy = e.clientY - lastY;
+                const distance = Math.sqrt(dx*dx + dy*dy);
 
-            if (distance > 4) {
-                lastX = e.clientX;
-                lastY = e.clientY;
+                if (distance > 2) { // less spacing
+                    lastX = e.clientX;
+                    lastY = e.clientY;
 
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = (e.clientX + (Math.random() - 0.5) * 20) + 'px';
-                sparkle.style.top = (e.clientY + (Math.random() - 0.5) * 20) + 'px';
-                const size = Math.random() * 8 + 8; 
-                sparkle.style.fontSize = size + 'px';
-                sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
-                sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
-                sparkle.style.opacity = 1;
-                sparkle.style.position = 'fixed';
-                sparkle.style.pointerEvents = 'none';
-                sparkle.style.userSelect = 'none';
-                sparkle.style.zIndex = 9999;
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = (e.clientX + (Math.random() - 0.5) * 20) + 'px';
+                    sparkle.style.top = (e.clientY + (Math.random() - 0.5) * 20) + 'px';
+                    
+                    // smaller, skinnier sparkles
+                    const size = Math.random() * 6 + 4; // 4px to 10px
+                    sparkle.style.fontSize = size + 'px';
+                    
+                    sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
+                    sparkle.style.opacity = 1;
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.userSelect = 'none';
+                    sparkle.style.zIndex = 9999;
 
-                document.body.appendChild(sparkle);
-                sparkles.push(sparkle);
+                    document.body.appendChild(sparkle);
+                    sparkles.push(sparkle);
 
-                if (sparkles.length > maxSparkles) {
-                    const old = sparkles.shift();
-                    old.remove();
-                }
-            }
-        });
-
-        function animateSparkles() {
-            sparkles.forEach((s, i) => {
-                const newOpacity = parseFloat(s.style.opacity) - fadeSpeed;
-                s.style.opacity = newOpacity.toFixed(2);
-                if (newOpacity <= 0) {
-                    s.remove();
-                    sparkles.splice(i, 1);
+                    if (sparkles.length > maxSparkles) {
+                        const old = sparkles.shift();
+                        old.remove();
+                    }
                 }
             });
-            requestAnimationFrame(animateSparkles);
-        }
 
-        animateSparkles();
-    })();
+            function animateSparkles() {
+                sparkles.forEach((s, i) => {
+                    const newOpacity = parseFloat(s.style.opacity) - fadeSpeed;
+                    s.style.opacity = newOpacity.toFixed(2);
+                    if (newOpacity <= 0) {
+                        s.remove();
+                        sparkles.splice(i, 1);
+                    }
+                });
+                requestAnimationFrame(animateSparkles);
+            }
+
+            animateSparkles();
+        })();
     </script>
 </body>
 </html>
