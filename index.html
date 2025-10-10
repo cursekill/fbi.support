@@ -82,17 +82,49 @@
                 0 0 10px rgba(255, 255, 255, 0.3),
                 0 0 15px rgba(255, 255, 255, 0.4),
                 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: textGlow 2s infinite;
         }
 
+        /* Instagram link glow */
         p a {
             color: white;
             text-decoration: none;
             font-size: 1.2em;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+            text-shadow:
+                0 0 5px rgba(255, 255, 255, 0.2),
+                0 0 10px rgba(255, 255, 255, 0.3),
+                0 0 15px rgba(255, 255, 255, 0.4),
+                0 0 20px rgba(255, 255, 255, 0.5);
+            animation: textGlow 2s infinite;
+            transition: text-shadow 0.5s ease-in-out;
         }
 
         p a:hover {
             text-decoration: underline;
+        }
+
+        @keyframes textGlow {
+            0% {
+                text-shadow:
+                    0 0 5px rgba(255, 255, 255, 0.2),
+                    0 0 10px rgba(255, 255, 255, 0.3),
+                    0 0 15px rgba(255, 255, 255, 0.4),
+                    0 0 20px rgba(255, 255, 255, 0.5);
+            }
+            50% {
+                text-shadow:
+                    0 0 10px rgba(255, 255, 255, 0.5),
+                    0 0 20px rgba(255, 255, 255, 0.7),
+                    0 0 30px rgba(255, 255, 255, 0.9),
+                    0 0 40px rgba(255, 255, 255, 1);
+            }
+            100% {
+                text-shadow:
+                    0 0 5px rgba(255, 255, 255, 0.2),
+                    0 0 10px rgba(255, 255, 255, 0.3),
+                    0 0 15px rgba(255, 255, 255, 0.4),
+                    0 0 20px rgba(255, 255, 255, 0.5);
+            }
         }
 
         .black-screen {
@@ -189,12 +221,10 @@
             setTimeout(() => {
                 blackScreen.style.display = 'none';
                 mainContent.classList.add('show');
-                // Pop in profiles one after the other
                 setTimeout(() => profile1.classList.add('show'), 200);
                 setTimeout(() => profile2.classList.add('show'), 500);
             }, 1000);
 
-            // Smooth music fade-in
             backgroundMusic.volume = 0;
             backgroundMusic.play();
             let fadeIn = setInterval(() => {
