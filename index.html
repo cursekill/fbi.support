@@ -17,12 +17,21 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
+            transition: background 1s ease-in-out;
         }
 
         .center {
             display: flex;
             flex-direction: column;
             align-items: center;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .center.show {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .profiles {
@@ -35,6 +44,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .profile.show {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .rounded-profile-pic {
@@ -47,13 +64,12 @@
         }
 
         .glow-effect {
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             animation: glow 2s infinite;
         }
 
         @keyframes glow {
             0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-            50% { box-shadow: 0 0 10px rgba(255, 255, 255, 1); }
+            50% { box-shadow: 0 0 20px rgba(255, 255, 255, 1); }
             100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
         }
 
@@ -65,18 +81,14 @@
                 0 0 5px rgba(255, 255, 255, 0.2),
                 0 0 10px rgba(255, 255, 255, 0.3),
                 0 0 15px rgba(255, 255, 255, 0.4),
-                0 0 20px rgba(255, 255, 255, 0.5),
-                0 0 25px rgba(255, 255, 255, 0.6),
-                0 0 30px rgba(255, 255, 255, 0.7);
+                0 0 20px rgba(255, 255, 255, 0.5);
         }
 
         p a {
             color: white;
             text-decoration: none;
             font-size: 1.2em;
-            text-shadow:
-                0 0 5px rgba(255, 255, 255, 0.2),
-                0 0 10px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
         }
 
         p a:hover {
@@ -96,6 +108,13 @@
             align-items: center;
             cursor: pointer;
             z-index: 1000;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .black-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .sparkle {
@@ -105,7 +124,7 @@
             z-index: 9999;
         }
 
-        /* 📱 Mobile-friendly support */
+        /* 📱 Mobile-friendly */
         @media (max-width: 768px) {
             html, body {
                 overflow: auto;
@@ -115,16 +134,17 @@
 
             .profiles {
                 flex-direction: column;
-                gap: 40px;
+                gap: 30px;
+                transform: scale(0.8);
             }
 
             .rounded-profile-pic {
-                width: 180px;
-                height: 180px;
+                width: 160px;
+                height: 160px;
             }
 
             h1 {
-                font-size: 2em;
+                font-size: 1.8em;
             }
 
             p a {
@@ -138,14 +158,14 @@
         <p>[click to enter]</p>
     </div>
 
-    <div class="center" id="mainContent" style="display: none;">
+    <div class="center" id="mainContent">
         <div class="profiles">
-            <div class="profile">
+            <div class="profile" id="profile1">
                 <img src="assets/4fa309a295b8d64ca076b82cdcb9b95c.jpg" class="rounded-profile-pic glow-effect" alt="curse picture">
                 <h1>curse</h1>
                 <p><a href="https://www.instagram.com/x010392/" target="_blank">Instagram</a></p>
             </div>
-            <div class="profile">
+            <div class="profile" id="profile2">
                 <img src="assets/lurkin.jpg" class="rounded-profile-pic glow-effect" alt="lurkin picture">
                 <h1>lurkin</h1>
                 <p><a href="https://www.instagram.com/xx716781/" target="_blank">Instagram</a></p>
@@ -155,22 +175,31 @@
 
     <audio id="backgroundMusic" loop>
         <source src="assets/song.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
     </audio>
 
     <script>
         const blackScreen = document.getElementById('blackScreen');
         const mainContent = document.getElementById('mainContent');
         const backgroundMusic = document.getElementById('backgroundMusic');
+        const profile1 = document.getElementById('profile1');
+        const profile2 = document.getElementById('profile2');
 
         blackScreen.addEventListener('click', () => {
-            blackScreen.style.display = 'none';
-            mainContent.style.display = 'flex';
+            blackScreen.classList.add('fade-out');
+            setTimeout(() => {
+                blackScreen.style.display = 'none';
+                mainContent.classList.add('show');
+                // Pop in profiles one after the other
+                setTimeout(() => profile1.classList.add('show'), 200);
+                setTimeout(() => profile2.classList.add('show'), 500);
+            }, 1000);
+
+            // Smooth music fade-in
             backgroundMusic.volume = 0;
             backgroundMusic.play();
             let fadeIn = setInterval(() => {
                 if (backgroundMusic.volume < 1) {
-                    backgroundMusic.volume += 0.1;
+                    backgroundMusic.volume += 0.05;
                 } else {
                     clearInterval(fadeIn);
                 }
@@ -178,22 +207,20 @@
         });
     </script>
 
-    <!-- Updated Sparkle Cursor -->
+    <!-- Sparkle Cursor -->
     <script>
         (function() {
             const sparkleChars = ['✦', '✧', '✯', '✬', '✫', '*'];
-            const colors = ['#000000', '#555555', '#AAAAAA', '#FFFFFF']; // grayscale
+            const colors = ['#000000', '#555555', '#AAAAAA', '#FFFFFF'];
             let sparkles = [];
             const maxSparkles = 40;
             const fadeSpeed = 0.01;
-            let lastX = 0;
-            let lastY = 0;
+            let lastX = 0, lastY = 0;
 
             document.addEventListener('mousemove', e => {
                 const dx = e.clientX - lastX;
                 const dy = e.clientY - lastY;
                 const distance = Math.sqrt(dx*dx + dy*dy);
-
                 if (distance > 2) {
                     lastX = e.clientX;
                     lastY = e.clientY;
@@ -207,10 +234,6 @@
                     sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
                     sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
                     sparkle.style.opacity = 1;
-                    sparkle.style.position = 'fixed';
-                    sparkle.style.pointerEvents = 'none';
-                    sparkle.style.userSelect = 'none';
-                    sparkle.style.zIndex = 9999;
 
                     document.body.appendChild(sparkle);
                     sparkles.push(sparkle);
@@ -224,9 +247,8 @@
 
             function animateSparkles() {
                 sparkles.forEach((s, i) => {
-                    const newOpacity = parseFloat(s.style.opacity) - fadeSpeed;
-                    s.style.opacity = newOpacity.toFixed(2);
-                    if (newOpacity <= 0) {
+                    s.style.opacity = (parseFloat(s.style.opacity) - fadeSpeed).toFixed(2);
+                    if (s.style.opacity <= 0) {
                         s.remove();
                         sparkles.splice(i, 1);
                     }
