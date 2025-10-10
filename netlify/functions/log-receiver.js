@@ -1,8 +1,4 @@
-// log-receiver.js
-const fs = require('fs');
-
 exports.handler = async (event, context) => {
-  // Simple authentication with your secret key
   const LOG_KEY = process.env.NETLIFY_LOG_KEY || '';
   const key = event.headers['x-log-key'] || '';
 
@@ -23,9 +19,8 @@ exports.handler = async (event, context) => {
     };
   }
 
-  // Append log to a file in /tmp (serverless writable folder)
-  const logEntry = JSON.stringify(payload) + '\n';
-  fs.appendFileSync('/tmp/visitor-logs.txt', logEntry);
+  // ✅ Print visitor info directly to Netlify logs
+  console.log('Visitor log:', payload);
 
   return {
     statusCode: 200,
