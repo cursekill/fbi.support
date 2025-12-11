@@ -126,7 +126,7 @@ function curseexnt() {
 function loundra() {
     memberCall(
         "assets/l7_icon.png",
-        "<a href='https://blankwhitescreen.com/' target='_blank' style='color: white;'>redacted</a>",
+        "<a href='https://instagram.com/n/' target='_blank' style='color: white;'>instagram</a>",
         "leak"
     );
 }
