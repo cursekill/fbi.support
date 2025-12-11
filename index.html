@@ -1,293 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>@fbi.support</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>curse & lurkin</title>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: Poppins, sans-serif;
-            background-color: black;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            overflow: hidden;
-            transition: background 1s ease-in-out;
-        }
-
-        .center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-        }
-
-        .center.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .profiles {
-            display: flex;
-            flex-direction: row;
-            gap: 100px;
-        }
-
-        .profile {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-        }
-
-        .profile.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .rounded-profile-pic {
-            border-radius: 50%;
-            width: 250px;
-            height: 250px;
-            margin: 20px auto;
-            border: 5px solid #333;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .glow-effect {
-            animation: glow 2s infinite;
-        }
-
-        @keyframes glow {
-            0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(255, 255, 255, 1); }
-            100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-        }
-
-        h1 {
-            margin: 10px 0;
-            font-size: 3em;
-            color: white;
-            text-shadow:
-                0 0 5px rgba(255, 255, 255, 0.2),
-                0 0 10px rgba(255, 255, 255, 0.3),
-                0 0 15px rgba(255, 255, 255, 0.4),
-                0 0 20px rgba(255, 255, 255, 0.5);
-            animation: textGlow 2s infinite;
-        }
-
-        /* Instagram link glow */
-        p a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.2em;
-            text-shadow:
-                0 0 5px rgba(255, 255, 255, 0.2),
-                0 0 10px rgba(255, 255, 255, 0.3),
-                0 0 15px rgba(255, 255, 255, 0.4),
-                0 0 20px rgba(255, 255, 255, 0.5);
-            animation: textGlow 2s infinite;
-            transition: text-shadow 0.5s ease-in-out;
-        }
-
-        p a:hover {
-            text-decoration: underline;
-        }
-
-        @keyframes textGlow {
-            0% {
-                text-shadow:
-                    0 0 5px rgba(255, 255, 255, 0.2),
-                    0 0 10px rgba(255, 255, 255, 0.3),
-                    0 0 15px rgba(255, 255, 255, 0.4),
-                    0 0 20px rgba(255, 255, 255, 0.5);
-            }
-            50% {
-                text-shadow:
-                    0 0 10px rgba(255, 255, 255, 0.5),
-                    0 0 20px rgba(255, 255, 255, 0.7),
-                    0 0 30px rgba(255, 255, 255, 0.9),
-                    0 0 40px rgba(255, 255, 255, 1);
-            }
-            100% {
-                text-shadow:
-                    0 0 5px rgba(255, 255, 255, 0.2),
-                    0 0 10px rgba(255, 255, 255, 0.3),
-                    0 0 15px rgba(255, 255, 255, 0.4),
-                    0 0 20px rgba(255, 255, 255, 0.5);
-            }
-        }
-
-        .black-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 1000;
-            opacity: 1;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .black-screen.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .sparkle {
-            position: fixed;
-            pointer-events: none;
-            user-select: none;
-            z-index: 9999;
-        }
-
-        /* 📱 Mobile-friendly */
-        @media (max-width: 768px) {
-            html, body {
-                overflow: auto;
-                height: auto;
-                padding: 20px;
-            }
-
-            .profiles {
-                flex-direction: column;
-                gap: 30px;
-                transform: scale(0.8);
-            }
-
-            .rounded-profile-pic {
-                width: 160px;
-                height: 160px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-
-            p a {
-                font-size: 1em;
-            }
-        }
-    </style>
+    <meta property="og:description" content="> and the defiant">
+    <meta name="theme-color" data-react-helmet="true" content="#2B2D31">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
+
 <body>
-    <div class="black-screen" id="blackScreen">
-        <p>[click to enter]</p>
+    <audio id="song"></audio>
+
+
+    <div class="buttons-container" id="enter-container">
+        <button id="enter" onclick="fadeAndRun(startPage)">enter</button>
     </div>
 
-    <div class="center" id="mainContent">
-        <div class="profiles">
-            <div class="profile" id="profile1">
-                <img src="assets/4fa309a295b8d64ca076b82cdcb9b95c.jpg" class="rounded-profile-pic glow-effect" alt="curse picture">
-                <h1>curse</h1>
-                <p><a href="https://www.instagram.com/x010002/" target="_blank">Instagram</a></p>
-            </div>
-            <div class="profile" id="profile2">
-                <img src="assets/lurkin.jpg" class="rounded-profile-pic glow-effect" alt="lurkin picture">
-                <h1>lurkin</h1>
-                <p><a href="https://www.instagram.com/x1010010101/" target="_blank">Instagram</a></p>
-            </div>
+    <div class="buttons-container" id="member-container">
+        <button onclick="fadeAndRun(lsd)">jayden</button>
+        <p>◦</p>
+        <button onclick="fadeAndRun(curseexnt)">curse</button>
+        <p>◦</p>
+        <button onclick="fadeAndRun(loundra)">leak</button>
+    </div>
+
+    <div class="buttons-container" id="main-container">
+        <button onclick="fadeAndRun(about)">about</button>
+        <p>◦</p>
+        <button onclick="fadeAndRun(domains)">domains</button>
+    </div>
+
+    <div class="background">
+        <div class="ascii-image" id="image">
+            <img id="random-gif">
+            <img id="pfp-image">
+        </div>
+
+        <div class="full-page-overlay">
+            <img src="assets/fake-ascii.png">
         </div>
     </div>
 
-    <audio id="backgroundMusic" loop>
-        <source src="assets/song.mp3" type="audio/mpeg">
-    </audio>
+    <div class="text-container">
+        <p class="display-text fade-target"></p>
+    </div>
 
-    <script>
-        const blackScreen = document.getElementById('blackScreen');
-        const mainContent = document.getElementById('mainContent');
-        const backgroundMusic = document.getElementById('backgroundMusic');
-        const profile1 = document.getElementById('profile1');
-        const profile2 = document.getElementById('profile2');
+    <div class="snowflakes"></div>
 
-        blackScreen.addEventListener('click', () => {
-            blackScreen.classList.add('fade-out');
-            setTimeout(() => {
-                blackScreen.style.display = 'none';
-                mainContent.classList.add('show');
-                setTimeout(() => profile1.classList.add('show'), 200);
-                setTimeout(() => profile2.classList.add('show'), 500);
-            }, 1000);
+    <!-- Fade overlay -->
+    <div id="fade"></div>
 
-            backgroundMusic.volume = 0;
-            backgroundMusic.play();
-            let fadeIn = setInterval(() => {
-                if (backgroundMusic.volume < 1) {
-                    backgroundMusic.volume += 0.05;
-                } else {
-                    clearInterval(fadeIn);
-                }
-            }, 200);
-        });
-    </script>
+    <script src="scripts/snowflakes.js"></script>
+    <script src="scripts/index.js"></script>
 
-    <!-- Sparkle Cursor -->
-    <script>
-        (function() {
-            const sparkleChars = ['✦', '✧', '✯', '✬', '✫', '*'];
-            const colors = ['#000000', '#555555', '#AAAAAA', '#FFFFFF'];
-            let sparkles = [];
-            const maxSparkles = 40;
-            const fadeSpeed = 0.01;
-            let lastX = 0, lastY = 0;
 
-            document.addEventListener('mousemove', e => {
-                const dx = e.clientX - lastX;
-                const dy = e.clientY - lastY;
-                const distance = Math.sqrt(dx*dx + dy*dy);
-                if (distance > 2) {
-                    lastX = e.clientX;
-                    lastY = e.clientY;
-
-                    const sparkle = document.createElement('div');
-                    sparkle.className = 'sparkle';
-                    sparkle.style.left = (e.clientX + (Math.random() - 0.5) * 20) + 'px';
-                    sparkle.style.top = (e.clientY + (Math.random() - 0.5) * 20) + 'px';
-                    const size = Math.random() * 6 + 4;
-                    sparkle.style.fontSize = size + 'px';
-                    sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
-                    sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
-                    sparkle.style.opacity = 1;
-
-                    document.body.appendChild(sparkle);
-                    sparkles.push(sparkle);
-
-                    if (sparkles.length > maxSparkles) {
-                        const old = sparkles.shift();
-                        old.remove();
-                    }
-                }
-            });
-
-            function animateSparkles() {
-                sparkles.forEach((s, i) => {
-                    s.style.opacity = (parseFloat(s.style.opacity) - fadeSpeed).toFixed(2);
-                    if (s.style.opacity <= 0) {
-                        s.remove();
-                        sparkles.splice(i, 1);
-                    }
-                });
-                requestAnimationFrame(animateSparkles);
-            }
-
-            animateSparkles();
-        })();
-    </script>
 </body>
 </html>
